@@ -617,29 +617,60 @@ private:
 
   void postDrawTH1F( TCanvas *, const VisDQMObject &o )
   {
+    TH1F* obj = dynamic_cast<TH1F*>( o.object );
+    assert( obj );
+
+    TLine tl2;
+    tl2.SetLineColor(921); // 15?
+    tl2.SetLineWidth(2);
+    tl2.SetLineStyle(7);
+
+    TLine tl3;
+    tl3.SetLineColor(921); // 15?
+    tl3.SetLineWidth(1);
+    tl3.SetLineStyle(7);
 
     TText tt;
     tt.SetTextSize(0.12);
+
+    TText tt2;
+    tt2.SetTextSize(0.04);
+    tt2.SetTextColor(15);
+
     if (o.flags == 0) return;
     else
+    {
+      if (o.flags & DQMNet::DQM_PROP_REPORT_ERROR)
       {
-        if (o.flags & DQMNet::DQM_PROP_REPORT_ERROR)
-	  {
-	    tt.SetTextColor(2);
-	    tt.DrawTextNDC(0.5, 0.5, "Error");
-	  }
-        else if (o.flags & DQMNet::DQM_PROP_REPORT_WARN)
-	  {
-	    tt.SetTextColor(5);
-	    tt.DrawTextNDC(0.5, 0.5, "Warning");
-	  }
-        else if (o.flags & DQMNet::DQM_PROP_REPORT_OTHER)
-	  {
-	    tt.SetTextColor(1);
-	    tt.DrawTextNDC(0.5, 0.5, "Other ");
-	  }
+      tt.SetTextColor(2);
+      tt.DrawTextNDC(0.5, 0.5, "Error");
       }
+      else if (o.flags & DQMNet::DQM_PROP_REPORT_WARN)
+      {
+      tt.SetTextColor(5);
+      tt.DrawTextNDC(0.5, 0.5, "Warning");
+      }
+      else if (o.flags & DQMNet::DQM_PROP_REPORT_OTHER)
+      {
+      tt.SetTextColor(1);
+      tt.DrawTextNDC(0.5, 0.5, "Other ");
+      }
+    }
 
+    if( o.name.find( "/ReadoutView/FE/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/FED/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/Fiber/VsId/" ) != std::string::npos )
+    {
+      float plot_ymax = 1.049*(obj->GetMaximum());
+      if ( plot_ymax == 0 ) plot_ymax = 1.049;
+      tl3.DrawLine(134.0, 0., 134.0, plot_ymax);
+      tl2.DrawLine(164.0, 0., 164.0, plot_ymax);
+      tl2.DrawLine(260.0, 0., 260.0, plot_ymax);
+      tl2.DrawLine(356.0, 0., 356.0, plot_ymax);
+
+      tt2.DrawTextNDC(0.18, 0.91, "TIB/D");
+      tt2.DrawTextNDC(0.38, 0.91, "TEC-");
+      tt2.DrawTextNDC(0.55, 0.91, "TEC+");
+      tt2.DrawTextNDC(0.72, 0.91, "TOB");
+    }
   }
 
   void postDrawTH2F( TCanvas *c, const VisDQMObject &o )
