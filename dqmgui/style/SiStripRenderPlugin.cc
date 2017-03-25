@@ -657,7 +657,7 @@ private:
       }
     }
 
-    if( o.name.find( "/ReadoutView/FE/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/FED/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/Fiber/VsId/" ) != std::string::npos )
+    if( o.name.find( "/ReadoutView/FE/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/FED/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/Fiber/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/DataPresent" ) != std::string::npos )
     {
       float plot_ymax = 1.049*(obj->GetMaximum());
       if ( plot_ymax == 0 ) plot_ymax = 1.049;
@@ -788,7 +788,21 @@ private:
         tt2.DrawTextNDC(0.58, 0.92, "TEC+");
         tt2.DrawTextNDC(0.77, 0.92, "TOB");
         
-        c->SetGridx(0);
+        //c->SetGridx(0);
+      }
+      if( o.name.find( "FedIdVsApvId" )  != std::string::npos)
+	    {
+        float err_xmin = obj->GetXaxis()->GetXmin();
+        float err_xmax = obj->GetXaxis()->GetXmax();
+        tl3.DrawLine(err_xmin, 134.0, err_xmax, 134.0);
+        tl2.DrawLine(err_xmin, 164.0, err_xmax, 164.0);
+        tl2.DrawLine(err_xmin, 260.0, err_xmax, 260.0);
+        tl2.DrawLine(err_xmin, 356.0, err_xmax, 356.0);
+        
+        tt2.DrawTextNDC(0.02, 0.22, "TIB/D");
+        tt2.DrawTextNDC(0.02, 0.40, "TEC-");
+        tt2.DrawTextNDC(0.02, 0.58, "TEC+");
+        tt2.DrawTextNDC(0.02, 0.68, "TOB");
       }
     }
 
@@ -806,6 +820,20 @@ private:
     TLine tl2;
     tl2.SetLineColor(4);
     tl2.SetLineWidth(3);
+
+    TLine tl3;
+    tl3.SetLineColor(921); // 15?
+    tl3.SetLineWidth(2);
+    tl3.SetLineStyle(7);
+
+    TLine tl4;
+    tl4.SetLineColor(921); // 15?
+    tl4.SetLineWidth(1);
+    tl4.SetLineStyle(7);
+
+    TText tt;
+    tt.SetTextSize(0.04);
+    tt.SetTextColor(15);
 
     float xmin = 0.0;
     float xmax = obj->GetXaxis()->GetXmax();
@@ -909,6 +937,20 @@ private:
         }
         return;
       }
+    if( o.name.find( "/ReadoutView/FedEventSize" ) != std::string::npos )
+    {
+      float plot_ymax = 1.049*(obj->GetMaximum()+2*sqrt(obj->GetMaximum()));
+      if ( plot_ymax == 0 ) plot_ymax = 1.049;
+      tl4.DrawLine(134.0, -0.05, 134.0, plot_ymax);
+      tl3.DrawLine(164.0, -0.05, 164.0, plot_ymax);
+      tl3.DrawLine(260.0, -0.05, 260.0, plot_ymax);
+      tl3.DrawLine(356.0, -0.05, 356.0, plot_ymax);
+
+      tt.DrawTextNDC(0.18, 0.91, "TIB/D");
+      tt.DrawTextNDC(0.38, 0.91, "TEC-");
+      tt.DrawTextNDC(0.55, 0.91, "TEC+");
+      tt.DrawTextNDC(0.72, 0.91, "TOB");
+    }
   }
 
 };
