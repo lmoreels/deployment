@@ -621,12 +621,12 @@ private:
     assert( obj );
 
     TLine tl2;
-    tl2.SetLineColor(921); // 15?
+    tl2.SetLineColor(922); // 15?
     tl2.SetLineWidth(2);
     tl2.SetLineStyle(7);
 
     TLine tl3;
-    tl3.SetLineColor(921); // 15?
+    tl3.SetLineColor(922); // 15?
     tl3.SetLineWidth(1);
     tl3.SetLineStyle(7);
 
@@ -694,12 +694,12 @@ private:
       float mask2_ymax = 458.5;
 
       TLine tl2;
-      tl2.SetLineColor(921); // 15?
+      tl2.SetLineColor(922); // 15?
       tl2.SetLineWidth(2);
       tl2.SetLineStyle(7);
       
       TLine tl3;
-      tl3.SetLineColor(921); // 15?
+      tl3.SetLineColor(922); // 15?
       tl3.SetLineWidth(1);
       tl3.SetLineStyle(7);
 
@@ -774,7 +774,7 @@ private:
         }
         return;
       }
-      if( o.name.find( "FEDErrorsVsId" )  != std::string::npos)
+      if( o.name.find( "FEDErrorsVsId" )  != std::string::npos || o.name.find( "ApvIdVsFedId" )  != std::string::npos )
 	    {
         float err_ymin = obj->GetYaxis()->GetXmin();
         float err_ymax = obj->GetYaxis()->GetXmax();
@@ -787,22 +787,6 @@ private:
         tt2.DrawTextNDC(0.43, 0.92, "TEC-");
         tt2.DrawTextNDC(0.58, 0.92, "TEC+");
         tt2.DrawTextNDC(0.77, 0.92, "TOB");
-        
-        //c->SetGridx(0);
-      }
-      if( o.name.find( "FedIdVsApvId" )  != std::string::npos)
-	    {
-        float err_xmin = obj->GetXaxis()->GetXmin();
-        float err_xmax = obj->GetXaxis()->GetXmax();
-        tl3.DrawLine(err_xmin, 134.0, err_xmax, 134.0);
-        tl2.DrawLine(err_xmin, 164.0, err_xmax, 164.0);
-        tl2.DrawLine(err_xmin, 260.0, err_xmax, 260.0);
-        tl2.DrawLine(err_xmin, 356.0, err_xmax, 356.0);
-        
-        tt2.DrawTextNDC(0.02, 0.22, "TIB/D");
-        tt2.DrawTextNDC(0.02, 0.40, "TEC-");
-        tt2.DrawTextNDC(0.02, 0.58, "TEC+");
-        tt2.DrawTextNDC(0.02, 0.68, "TOB");
       }
     }
 
@@ -822,12 +806,12 @@ private:
     tl2.SetLineWidth(3);
 
     TLine tl3;
-    tl3.SetLineColor(921); // 15?
+    tl3.SetLineColor(922); // 15?
     tl3.SetLineWidth(2);
     tl3.SetLineStyle(7);
 
     TLine tl4;
-    tl4.SetLineColor(921); // 15?
+    tl4.SetLineColor(922); // 15?
     tl4.SetLineWidth(1);
     tl4.SetLineStyle(7);
 
